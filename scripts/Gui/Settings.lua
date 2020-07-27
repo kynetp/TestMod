@@ -66,9 +66,22 @@ end
 function TestSettings:setupMenuButtonInfo()
     self.defaultMenuButtonInfo = {
         {inputAction = InputAction.MENU_BACK, text = self.l10n:getText("button_back"), callback = self:makeSelfCallback(self.onClickBack), showWhenPaused = true},
-        {inputAction = InputAction.MENU_ACCEPT, text = self.l10n:getText("button_apply"), callback = self:makeSelfCallback(self.onClickOK), showWhenPaused = true},
-        {inputAction = InputAction.MENU_CANCEL, text = self.l10n:getText("button_reset"), callback = self:makeSelfCallback(self.onClickReset), showWhenPaused = true}
+        {inputAction = InputAction.MENU_ACCEPT, text = self.l10n:getText("button_apply"), callback = self:makeSelfCallback(self.onClickOK), showWhenPaused = true}
     }
+end
+
+function TestSettings:onClickOK()
+    TestSettings:superClass().onClickBack(self)
+end
+
+function TestSettings:onClickBack()
+    self:onClickBackDialogCallback(true)
+end
+
+function TestSettings:onClickBackDialogCallback(yes)
+    if yes then
+        TestSettings:superClass().onClickBack(self)
+    end
 end
 
 function TestSettings:onOpen()
