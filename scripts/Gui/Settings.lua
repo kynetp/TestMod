@@ -19,11 +19,7 @@ function TestSettings:new()
     return o
 end
 function TestSettings:onClickBack()
-    if self:pagesHasChanges() then
-        g_gui:showYesNoDialog({text = g_i18n:getText("gui_ad_settingsClosingDialog_text"), title = g_i18n:getText("gui_ad_settingsClosingDialog_title"), callback = self.onClickBackDialogCallback, target = self})
-    else
-        self:onClickBackDialogCallback(true)
-    end
+    self:onClickBackDialogCallback(true)
 end
 function TestSettings:onClickBackDialogCallback(yes)
     if yes then
@@ -31,6 +27,11 @@ function TestSettings:onClickBackDialogCallback(yes)
     end
 end
 
+function TestSettings:onClickBackDialogCallback(yes)
+    if yes then
+        TestSettings:superClass().onClickBack(self)
+    end
+end
 
 function TestSettings:onGuiSetupFinished()
     TestSettings:superClass().onGuiSetupFinished(self)
